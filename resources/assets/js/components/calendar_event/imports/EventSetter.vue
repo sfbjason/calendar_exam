@@ -1,18 +1,20 @@
 <template>
     <div>
         <v-layout row wrap>
+            
             <v-flex xs12>
                 <v-text-field
                     name="name"
                     label="Event"
                     id="id"
                     v-model="event_name"
+                    :rules="[rules.required]"
                 ></v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6>
                 <v-menu
-                    v-model="menu2"
+                    v-model="date_picker.from"
                     :close-on-content-click="false"
                     lazy
                     transition="scale-transition"
@@ -26,12 +28,13 @@
                         label="From"
                         prepend-icon="event"
                         readonly
+                        :rules="[rules.required]"
                         v-on="on"
                     ></v-text-field>
                     </template>
                     <v-date-picker 
                         v-model="dates.from" 
-                        @input="menu2 = false"
+                        @input="date_picker.from = false"
                         :max="dates.to"
                     ></v-date-picker>
                 </v-menu>
@@ -39,7 +42,7 @@
 
             <v-flex xs12 sm6>
                 <v-menu
-                    v-model="menu3"
+                    v-model="date_picker.to"
                     :close-on-content-click="false"
                     lazy
                     transition="scale-transition"
@@ -53,12 +56,13 @@
                         label="From"
                         prepend-icon="event"
                         readonly
+                        :rules="[rules.required]"
                         v-on="on"
                     ></v-text-field>
                     </template>
                     <v-date-picker 
                         v-model="dates.to" 
-                        @input="menu3 = false"
+                        @input="date_picker.to = false"
                         :min="dates.from"
                     ></v-date-picker>
                 </v-menu>
@@ -66,7 +70,12 @@
 
             <template v-for="(data, i) in days">
                 <v-flex xs6 md4>
-                    <v-checkbox v-model="day_selected" :label="data.text" :value="data.val" hide-details></v-checkbox>
+                    <v-checkbox 
+                        v-model="day_selected" 
+                        :label="data.text" 
+                        :value="data.val" 
+                        :rules="[rules.atLeastOneWeekday]"
+                        ></v-checkbox>
                 </v-flex>
             </template>
 
@@ -86,14 +95,21 @@ export default {
         },
         dates: {
             type: Object
-        }
+        },
     },
     data() {
         return {
+            valid: false,
             event_name: '',
-            menu2: false,
-            menu3: false,
-            day_selected: []
+            date_picker: {
+                from: false,
+                to: false
+            },
+            day_selected: [],
+            rules: {
+                required: v => !!v || 'This field is required.',
+                atLeastOneWeekday: (selected) => selected.length > 0 || 'At least one item should be selected',
+            }
         }
     },
     watch: {

@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-  <title>Test JD Life</title>
+  <title>Appetiser Apps | Coding Challenge</title>
 </head>
 
 <body>

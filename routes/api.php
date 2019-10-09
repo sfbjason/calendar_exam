@@ -19,12 +19,7 @@ use Illuminate\Http\Request;
 
 Route::group([
     'middleware' => ['api'],
-    'namespace' => 'JD'
+    'namespace' => 'Exam'
 ], function ($router) {
-    Route::post('save_question', 'QuestionnaireController@save_question');
-    Route::get('get_question', 'QuestionnaireController@get_question');
-    Route::post('save_answer', 'QuestionnaireController@save_answer');
-    Route::get('get_list', 'QuestionnaireController@get_list');
-    Route::post('update_answer', 'QuestionnaireController@update_answer');
-    Route::post('delete_answer', 'QuestionnaireController@delete_answer');
+    Route::post('store_event', 'CalendarEventController@store_event');
 }); 

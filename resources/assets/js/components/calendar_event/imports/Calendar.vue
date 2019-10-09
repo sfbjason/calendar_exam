@@ -22,7 +22,7 @@
                                 v-if="check_if_exist(weekday,date)"
                                 tile
                                 >
-                                    {{event_name}}
+                                    {{saved_object.name}}
                                 </v-sheet>
                                 
                             </v-layout>
@@ -42,17 +42,17 @@ export default {
         dates: {
             type: Object
         },
-        saved_days: {
-            type: Array,
-        },
-        saved_dates: {
+        saved_object: {
             type: Object,
-            default: null
-        },
-        event_name: {
-            type: String,
-            default: ''
-        },
+            default: {
+                name: '',
+                days: [],
+                dates: {
+                    from: moment().format('YYYY-MM-DD'),
+                    to: moment().format('YYYY-MM-DD'),
+                }, 
+            }
+        }
     },
     data() {
         return {
@@ -61,9 +61,9 @@ export default {
     },
     methods: {
         check_if_exist(weekday,date) {
-            if(this.saved_dates) {
-                if(moment(date) >= moment(this.saved_dates.from) && moment(date) <= moment(this.saved_dates.to)){
-                    return this.saved_days.length > 0 ? this.saved_days.includes(weekday) : false
+            if(this.saved_object.dates) {
+                if(moment(date) >= moment(this.saved_object.dates.from) && moment(date) <= moment(this.saved_object.dates.to)){
+                    return this.saved_object.days.length > 0 ? this.saved_object.days.includes(weekday) : false
                 }
             }
             return false
